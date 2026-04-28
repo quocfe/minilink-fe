@@ -1,0 +1,15 @@
+services:
+  minilink-fe:
+    image: ghcr.io/quocfe/minilink-fe:latest
+    container_name: minilink-fe
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - mini_links
+
+networks:
+  mini_links:
+    external: true

@@ -16,7 +16,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-EXPOSE 3000
+EXPOSE 5432
 
 # Chạy bằng node thuần, không cần npm hay serve
 CMD ["node", "server.js"]

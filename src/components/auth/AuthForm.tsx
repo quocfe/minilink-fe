@@ -4,6 +4,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import {
   useLogin,
@@ -12,6 +14,7 @@ import {
   getApiErrorMessage,
 } from '@/hooks/useAuthMutations';
 import { useBulkAssign } from '@/hooks/useBulkAssign';
+import { useLinks } from '@/hooks/useLinks';
 
 interface Props {
   onClose: () => void;
@@ -23,6 +26,8 @@ type AuthFields = { email: string; password: string };
 const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const { login } = useAuth();
 
   const loginMutation = useLogin();
@@ -38,6 +43,24 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
     formState: { errors, isSubmitting },
   } = useForm<AuthFields>({ defaultValues: { email: '', password: '' } });
 
+  const handleAuthSuccess = () => {
+    login();
+    // Thực hiện gán link ẩn danh vào user mới login
+    bulkAssignMutation.mutate(undefined, {
+      onSuccess: () => {
+        // Sau khi gán xong mới làm mới toàn bộ dữ liệu links
+        queryClient.invalidateQueries({ queryKey: ['links'] });
+        router.refresh();
+      },
+      onError: () => {
+        // Kể cả lỗi gán link cũng nên refresh để user thấy data hiện tại của họ
+        queryClient.invalidateQueries({ queryKey: ['links'] });
+        router.refresh();
+      }
+    });
+    onClose();
+  };
+
   const currentEmail = watch('email');
 
   const handleGoogleSuccess = async (credentialResponse: { credential?: string }) => {
@@ -45,7 +68,7 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
     googleLoginMutation.mutate(
       { credential: credentialResponse.credential },
       {
-        onSuccess: () => { login(); bulkAssignMutation.mutate(); onClose(); },
+        onSuccess: handleAuthSuccess,
         onError: (err) => alert(getApiErrorMessage(err, 'Google login failed')),
       }
     );
@@ -54,13 +77,13 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
   const onSubmit = async (data: AuthFields) => {
     if (isLogin) {
       loginMutation.mutate(data, {
-        onSuccess: () => { login(); bulkAssignMutation.mutate(); onClose(); },
+        onSuccess: handleAuthSuccess,
         onError: (err) =>
           setError('root', { message: getApiErrorMessage(err, 'Login failed') }),
       });
     } else {
       registerMutation.mutate(data, {
-        onSuccess: () => { login(); bulkAssignMutation.mutate(); onClose(); },
+        onSuccess: handleAuthSuccess,
         onError: (err) =>
           setError('root', { message: getApiErrorMessage(err, 'Registration failed') }),
       });

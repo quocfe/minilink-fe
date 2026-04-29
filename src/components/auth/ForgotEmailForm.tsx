@@ -4,6 +4,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Mail, ArrowLeft } from 'lucide-react';
 import { useForgotPassword, getApiErrorMessage } from '@/hooks/useAuthMutations';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   defaultEmail?: string;
@@ -24,14 +25,16 @@ const ForgotEmailForm: React.FC<Props> = ({ defaultEmail = '', onBack, onSuccess
   } = useForm<Fields>({ defaultValues: { email: defaultEmail } });
 
   const onSubmit = async (data: Fields) => {
-    forgotPasswordMutation.mutate(
-      { email: data.email },
+    // Chuyển ngay sang bước nhập OTP
+    onSuccess(data.email);
+
+    // Gửi yêu cầu trong background kèm theo Toast thông báo
+    toast.promise(
+      forgotPasswordMutation.mutateAsync({ email: data.email }),
       {
-        onSuccess: () => onSuccess(data.email),
-        onError: (err) =>
-          setError('root', {
-            message: getApiErrorMessage(err, 'Failed to send verification code. Please try again.'),
-          }),
+        loading: 'Sending verification code...',
+        success: 'Code sent to your email!',
+        error: (err) => getApiErrorMessage(err, 'Failed to send code'),
       }
     );
   };

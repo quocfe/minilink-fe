@@ -26,9 +26,9 @@ export const AuthProvider: React.FC<{ children: ReactNode; initialAuth: boolean 
     }),
   });
 
-  // Mutation để logout qua Next.js route handler (xóa httpOnly cookie server-side)
+  // Mutation để logout trực tiếp backend (xóa httpOnly cookie)
   const logoutMutation = useMutation({
-    mutationFn: () => fetch('/api/auth/logout', { method: 'POST' }).then(() => undefined),
+    mutationFn: () => apiClient.post('/auth/logout').then(() => undefined),
     onSettled: () => {
       queryClient.removeQueries({ queryKey: AUTH_ME_KEY });
       if (typeof window !== 'undefined') {

@@ -22,19 +22,11 @@ export const getApiErrorMessage = (err: unknown, fallback: string): string =>
 
 // ─── Hooks ───────────────────────────────────────────────────────────────────
 
-/** Đăng nhập qua Next.js route handler (để set httpOnly cookie) */
+/** Đăng nhập trực tiếp backend (backend sẽ set httpOnly cookie) */
 export const useLogin = () =>
   useMutation<void, Error, LoginVars>({
     mutationFn: async (vars) => {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(vars),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.message ?? 'Login failed');
-      }
+      await apiClient.post('/auth/login', vars);
     },
   });
 
@@ -46,19 +38,11 @@ export const useRegister = () =>
     },
   });
 
-/** Đăng nhập bằng Google qua Next.js route handler */
+/** Đăng nhập bằng Google trực tiếp backend */
 export const useGoogleLogin = () =>
   useMutation<void, Error, GoogleLoginVars>({
     mutationFn: async (vars) => {
-      const res = await fetch('/api/auth/google', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(vars),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.message ?? 'Google login failed');
-      }
+      await apiClient.post('/auth/google', vars);
     },
   });
 

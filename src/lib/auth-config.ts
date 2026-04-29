@@ -24,7 +24,7 @@ export const BACKEND_URL =
  */
 export const cookieOptions = {
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
+  sameSite: 'lax' as const, // 'lax' tốt hơn cho cross-subdomain
   path: '/',
 };
 

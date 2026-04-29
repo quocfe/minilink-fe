@@ -1,15 +1,20 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
-
+/**
+ * Tất cả API calls đi qua /api/proxy/* (same-origin với Next.js).
+ * Next.js rewrite sẽ forward tới backend kèm toàn bộ headers (Cookie included).
+ * Tránh hoàn toàn cross-domain cookie issue.
+ */
 const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true, // Quan trọng: Để gửi kèm Cookies
+  baseURL: '/api/proxy',
+  withCredentials: true, // Gửi cookie cho same-origin request
   timeout: 10000, // 10 giây — tránh treo mãi nếu backend không phản hồi
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+
 
 // Response interceptor để xử lý lỗi 401 (Hết hạn token)
 apiClient.interceptors.response.use(
@@ -21,7 +26,7 @@ apiClient.interceptors.response.use(
     // Nếu lỗi 401 và code là TOKEN_EXPIRED
     if (error.response?.status === 401 && code === 'TOKEN_EXPIRED') {
       try {
-        await axios.post(`${API_BASE_URL}/auth/refresh`, {}, { withCredentials: true });
+        await apiClient.post('/auth/refresh', {});
 
         // Retry original request
         return apiClient(originalRequest);
@@ -38,3 +43,4 @@ apiClient.interceptors.response.use(
 );
 
 export default apiClient;
+

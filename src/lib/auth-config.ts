@@ -19,12 +19,15 @@ export const BACKEND_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
   'http://localhost:8000';
 
-/**
- * Cấu hình chung cho cookie (dùng lại ở route handlers)
- */
+
+export const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN ?? undefined;
+
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const cookieOptions = {
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax' as const, // 'lax' tốt hơn cho cross-subdomain
+  secure: isProduction,
+  sameSite: (isProduction ? 'none' : 'lax') as 'none' | 'lax',
   path: '/',
+  ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
 };
 

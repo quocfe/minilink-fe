@@ -18,6 +18,9 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV production
 
+ENV BACKEND_URL=""
+ENV COOKIE_DOMAIN=""
+
 # Next.js standalone cần copy các file cụ thể này
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./

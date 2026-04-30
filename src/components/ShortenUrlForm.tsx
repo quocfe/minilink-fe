@@ -55,7 +55,7 @@ const ShortenUrlForm: React.FC = () => {
           <input
             {...register('original_url')}
             type="text"
-            placeholder="Paste your long link here..."
+            placeholder="Dán đường dẫn dài của bạn vào đây..."
             className="w-full bg-transparent border-none outline-none focus:ring-0 py-3 text-slate-200 placeholder:text-slate-500"
           />
         </div>
@@ -64,7 +64,7 @@ const ShortenUrlForm: React.FC = () => {
           <input
             {...register('custom_code')}
             type="text"
-            placeholder="Custom code (optional)"
+            placeholder="Mã tùy chỉnh (không bắt buộc)"
             className="w-full bg-transparent border-none outline-none focus:ring-0 py-3 text-slate-200 placeholder:text-slate-500 text-sm"
           />
         </div>
@@ -77,7 +77,7 @@ const ShortenUrlForm: React.FC = () => {
           {isPending ? (
             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
           ) : (
-            'Shorten'
+            'Rút gọn'
           )}
         </button>
       </form>
@@ -96,7 +96,7 @@ const ShortenUrlForm: React.FC = () => {
         )}
         {error && (
           <p className="text-red-400 text-xs font-medium">
-            Something went wrong. Please try again.
+            Thất bại. Vui lòng thử lại.
           </p>
         )}
       </div>
@@ -104,7 +104,7 @@ const ShortenUrlForm: React.FC = () => {
       {/* Success Message */}
       {shortUrl && (
         <div className="mt-8 glass p-6 rounded-2xl border-blue-500/30 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <p className="text-slate-400 text-sm mb-2">Success! Your short link is ready:</p>
+          <p className="text-slate-400 text-sm mb-2">Đã rút gọn! Link của bạn đã sẵn sàng:</p>
           <div className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
             <a
               href={shortUrl}
@@ -126,7 +126,7 @@ const ShortenUrlForm: React.FC = () => {
           </div>
           {!isAuthenticated && (
             <p className="text-slate-500 text-[10px] mt-4 text-center">
-              Want to track this link? <button className="text-blue-400 hover:underline">Login</button> to save it to your dashboard.
+              Muốn theo dõi link này? <button className="text-blue-400 hover:underline">Đăng nhập</button> để lưu vào dashboard.
             </p>
           )}
         </div>

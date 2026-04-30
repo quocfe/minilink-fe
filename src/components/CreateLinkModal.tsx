@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Link2, Shuffle } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import {useShortenUrl} from "@/hooks/useShortenUrl";
+import { useShortenUrl } from "@/hooks/useShortenUrl";
 
 interface FormData {
   original_url: string;
@@ -83,8 +83,8 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <Link2 size={20} className="text-blue-400" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-white">Create New Link</h2>
-                    <p className="text-slate-400 text-sm">Shorten and track your URL</p>
+                    <h2 className="text-xl font-bold text-white">Tạo Link Mới</h2>
+                    <p className="text-slate-400 text-sm">Rút gọn và theo dõi URL của bạn</p>
                   </div>
                 </div>
 
@@ -93,7 +93,7 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     {/* Original URL */}
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-slate-300 ml-1">
-                        Destination URL <span className="text-red-400">*</span>
+                        URL Đích <span className="text-red-400">*</span>
                       </label>
                       <div className="relative">
                         <Link2
@@ -115,8 +115,8 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     {/* Custom Code */}
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-slate-300 ml-1">
-                        Custom code{' '}
-                        <span className="text-slate-500 font-normal">(optional)</span>
+                        Mã tùy chỉnh{' '}
+                        <span className="text-slate-500 font-normal">(không bắt buộc)</span>
                       </label>
                       <div className="relative">
                         <Shuffle
@@ -137,7 +137,7 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
                     {error && (
                       <p className="text-red-400 text-sm text-center">
-                        Something went wrong. Please try again.
+                        Thất bại. Vui lòng thử lại.
                       </p>
                     )}
 
@@ -147,7 +147,7 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         onClick={handleClose}
                         className="flex-1 py-3 border border-white/10 hover:bg-white/5 text-slate-300 rounded-xl font-medium transition-all"
                       >
-                        Cancel
+                        Hủy
                       </button>
                       <button
                         type="submit"
@@ -157,7 +157,7 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         {isPending ? (
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
-                          'Shorten URL'
+                          'Rút Gọn URL'
                         )}
                       </button>
                     </div>
@@ -166,8 +166,8 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
                   /* Success State */
                   <div className="space-y-4">
                     <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-4 text-center">
-                      <p className="text-green-400 font-medium mb-1">🎉 Link created!</p>
-                      <p className="text-slate-400 text-sm">Your short link is ready to share</p>
+                      <p className="text-green-400 font-medium mb-1">🎉 Link đã được tạo!</p>
+                      <p className="text-slate-400 text-sm">Link ngắn của bạn đã sẵn sàng để chia sẻ</p>
                     </div>
                     <div className="flex items-center justify-between bg-white/5 p-4 rounded-xl border border-white/10">
                       <a
@@ -204,13 +204,13 @@ const CreateLinkModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         onClick={() => { reset(); setShortUrl(null); }}
                         className="flex-1 py-3 border border-white/10 hover:bg-white/5 text-slate-300 rounded-xl font-medium transition-all"
                       >
-                        Create Another
+                        Tạo Link Khác
                       </button>
                       <button
                         onClick={handleClose}
                         className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all"
                       >
-                        Done
+                        Xong
                       </button>
                     </div>
                   </div>

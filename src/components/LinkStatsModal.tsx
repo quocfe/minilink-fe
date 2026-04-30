@@ -45,16 +45,16 @@ const LinkStatsModal: React.FC<LinkStatsModalProps> = ({ shortCode, onClose }) =
               {isLoading ? (
                 <div className="p-12 flex flex-col items-center justify-center space-y-4">
                   <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
-                  <p className="text-slate-400 animate-pulse">Analyzing link data...</p>
+                  <p className="text-slate-400 animate-pulse">Đang phân tích dữ liệu link...</p>
                 </div>
               ) : error || !stats ? (
                 <div className="p-12 text-center">
-                  <p className="text-red-400 mb-4">Failed to load analytics</p>
-                  <button 
+                  <p className="text-red-400 mb-4">Không thể tải dữ liệu thống kê</p>
+                  <button
                     onClick={onClose}
                     className="bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-xl transition-all"
                   >
-                    Close
+                    Đóng
                   </button>
                 </div>
               ) : (
@@ -65,10 +65,10 @@ const LinkStatsModal: React.FC<LinkStatsModalProps> = ({ shortCode, onClose }) =
                       <div className="p-2 bg-blue-500/20 rounded-lg">
                         <TrendingUp className="text-blue-400" size={20} />
                       </div>
-                      <h2 className="text-2xl font-bold text-white">Link Analytics</h2>
+                      <h2 className="text-2xl font-bold text-white">Thống Kê Link</h2>
                     </div>
                     <p className="text-slate-400 text-sm truncate max-w-md">
-                      Statistics for <span className="text-blue-400 font-medium">{stats.short_code}</span>
+                      Thống kê cho <span className="text-blue-400 font-medium">{stats.short_code}</span>
                     </p>
                   </div>
 
@@ -77,14 +77,14 @@ const LinkStatsModal: React.FC<LinkStatsModalProps> = ({ shortCode, onClose }) =
                     <div className="bg-white/5 border border-white/5 p-4 rounded-2xl">
                       <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
                         <MousePointer2 size={14} />
-                        Total Clicks
+                        Tổng Lượt Click
                       </div>
                       <p className="text-3xl font-bold text-white">{stats.total_clicks}</p>
                     </div>
                     <div className="bg-white/5 border border-white/5 p-4 rounded-2xl">
                       <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
                         <Calendar size={14} />
-                        Created
+                        Ngày Tạo
                       </div>
                       <p className="text-lg font-bold text-white">
                         {new Date(stats.created_at).toLocaleDateString()}
@@ -93,10 +93,10 @@ const LinkStatsModal: React.FC<LinkStatsModalProps> = ({ shortCode, onClose }) =
                     <div className="bg-white/5 border border-white/5 p-4 rounded-2xl">
                       <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
                         <Clock size={14} />
-                        Expires
+                        Hết Hạn
                       </div>
                       <p className="text-lg font-bold text-white">
-                        {stats.expires_at ? new Date(stats.expires_at).toLocaleDateString() : 'Never'}
+                        {stats.expires_at ? new Date(stats.expires_at).toLocaleDateString() : 'Không giới hạn'}
                       </p>
                     </div>
                   </div>
@@ -105,12 +105,12 @@ const LinkStatsModal: React.FC<LinkStatsModalProps> = ({ shortCode, onClose }) =
                   <div className="bg-white/5 border border-white/5 p-6 rounded-2xl mb-8">
                     <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                       <ExternalLink size={16} />
-                      Destination URL
+                      URL Đích
                     </h3>
                     <div className="bg-slate-950/50 p-4 rounded-xl border border-white/5 break-all">
-                      <a 
-                        href={stats.original_url} 
-                        target="_blank" 
+                      <a
+                        href={stats.original_url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-400 hover:underline text-sm font-medium"
                       >
@@ -123,7 +123,7 @@ const LinkStatsModal: React.FC<LinkStatsModalProps> = ({ shortCode, onClose }) =
                   <div>
                     <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                       <Clock size={16} />
-                      Recent Activity
+                      Hoạt Động Gần Đây
                     </h3>
                     <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                       {stats.recent_clicks.length > 0 ? (
@@ -146,7 +146,7 @@ const LinkStatsModal: React.FC<LinkStatsModalProps> = ({ shortCode, onClose }) =
                         ))
                       ) : (
                         <div className="text-center py-8 text-slate-500 text-sm italic">
-                          No clicks recorded yet.
+                          Chưa có lượt click nào.
                         </div>
                       )}
                     </div>

@@ -7,10 +7,11 @@ import { useAuth } from '@/hooks/useAuth';
 import LinkStatsModal from '@/components/LinkStatsModal';
 import CreateLinkModal from '@/components/CreateLinkModal';
 import ShortenUrlForm from '@/components/ShortenUrlForm';
+import RecentLinks from '@/components/RecentLinks';
 
 const Dashboard: React.FC = () => {
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
-  const { data, isLoading: isLinksLoading, error } = useLinks();
+  const { data, isLoading: isLinksLoading, error } = useLinks(isAuthenticated);
   const [selectedShortCode, setSelectedShortCode] = useState<string | null>(null);
   const [isCreateLinkOpen, setIsCreateLinkOpen] = useState(false);
 
@@ -36,9 +37,10 @@ const Dashboard: React.FC = () => {
             Shorten Your <span className="gradient-text">Links</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-xl mx-auto mb-10">
-            Paste your long URL below to get a short link instantly. Sign in to track clicks and manage your links.
+            Dán URL dài của bạn vào dưới để rút gọn ngay. Đăng nhập để theo dõi lượt click và quản lý link.
           </p>
           <ShortenUrlForm />
+          <RecentLinks />
         </main>
       </div>
     );
@@ -47,28 +49,28 @@ const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen pt-16 bg-slate-950">
       <Header />
-      
+
       <main className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">My Dashboard</h1>
-            <p className="text-slate-400">Manage and track your shortened links</p>
+            <h1 className="text-3xl font-bold text-white mb-2">Dashboard Của Tôi</h1>
+            <p className="text-slate-400">Quản lý và theo dõi các link rút gọn của bạn</p>
           </div>
           <button
             onClick={() => setIsCreateLinkOpen(true)}
             className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-bold transition-all flex items-center gap-2 active:scale-95"
           >
-            <span>+</span> Create New Link
+            <span>+</span> Tạo Link Mới
           </button>
         </div>
 
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {[
-            { label: 'Total Clicks', value: data?.click_events.total_clicks || 0, trend: '+12%' },
-            { label: 'Active Links', value: data?.click_events.active_links || 0, trend: '0%' },
-            { label: 'Top Domain', value: 'minilink.io', trend: '' },
-            { label: 'Saved Space', value: '450B', trend: '+5%' }
+            { label: 'Tổng Lượt Click', value: data?.click_events.total_clicks || 0, trend: '+12%' },
+            { label: 'Link Hoạt Động', value: data?.click_events.active_links || 0, trend: '0%' },
+            // { label: 'Miền Hàng Đầu', value: 'minilink.io', trend: '' },
+            // { label: 'Dung Lượng Tiết Kiệm', value: '450B', trend: '+5%' }
           ].map((stat, i) => (
             <div key={i} className="glass p-5 rounded-xl border-white/5">
               <p className="text-slate-400 text-sm mb-1">{stat.label}</p>
@@ -83,10 +85,10 @@ const Dashboard: React.FC = () => {
         {/* Links Table */}
         <div className="glass rounded-2xl border-white/5 overflow-hidden">
           <div className="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
-            <h2 className="text-xl font-bold text-white">Recent Links</h2>
-            <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">View all</button>
+            <h2 className="text-xl font-bold text-white">Link Gần Đây</h2>
+            <button className="text-blue-400 hover:text-blue-300 text-sm font-medium">Xem tất cả</button>
           </div>
-          
+
           <div className="divide-y divide-white/5">
             {isLinksLoading ? (
               // Loading Skeletons
@@ -104,11 +106,11 @@ const Dashboard: React.FC = () => {
               ))
             ) : error ? (
               <div className="p-12 text-center text-slate-500">
-                Failed to load links. Please try again later.
+                Tải link thất bại. Vui lòng thử lại sau.
               </div>
             ) : data?.links.length === 0 ? (
               <div className="p-12 text-center text-slate-500">
-                No links found. Create your first link above!
+                Chưa có link nào. Hãy tạo link đầu tiên của bạn!
               </div>
             ) : (
               data?.links.map((link) => (
@@ -118,9 +120,9 @@ const Dashboard: React.FC = () => {
                       {link.original_url}
                     </h4>
                     <div className="flex items-center gap-2">
-                      <a 
-                        href={link.short_url} 
-                        target="_blank" 
+                      <a
+                        href={link.short_url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-400 text-sm font-bold hover:underline"
                       >
@@ -135,10 +137,10 @@ const Dashboard: React.FC = () => {
                   <div className="flex items-center gap-6 w-full md:w-auto justify-between">
                     <div className="text-right">
                       <p className="text-white font-bold">{link.click_count}</p>
-                      <p className="text-slate-500 text-[10px] uppercase tracking-wider font-bold">Clicks</p>
+                      <p className="text-slate-500 text-[10px] uppercase tracking-wider font-bold">Lượt Click</p>
                     </div>
                     <div className="flex gap-2">
-                      <button 
+                      <button
                         onClick={() => navigator.clipboard.writeText(link.short_url)}
                         className="p-2 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors"
                         title="Copy to clipboard"
@@ -147,7 +149,7 @@ const Dashboard: React.FC = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
                       </button>
-                      <button 
+                      <button
                         onClick={() => setSelectedShortCode(link.short_code)}
                         className="p-2 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-colors"
                         title="View analytics"
@@ -165,9 +167,9 @@ const Dashboard: React.FC = () => {
         </div>
       </main>
 
-      <LinkStatsModal 
-        shortCode={selectedShortCode} 
-        onClose={() => setSelectedShortCode(null)} 
+      <LinkStatsModal
+        shortCode={selectedShortCode}
+        onClose={() => setSelectedShortCode(null)}
       />
 
       <CreateLinkModal

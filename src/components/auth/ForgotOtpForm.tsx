@@ -49,7 +49,7 @@ const ForgotOtpForm: React.FC<Props> = ({ email, onBack, onSuccess }) => {
     setError('');
     resendMutation.mutate(
       { email },
-      { onError: (err) => setError(getApiErrorMessage(err, 'Failed to resend code.')) }
+      { onError: (err) => setError(getApiErrorMessage(err, 'Không thể gửi lại mã.')) }
     );
   };
 
@@ -58,7 +58,7 @@ const ForgotOtpForm: React.FC<Props> = ({ email, onBack, onSuccess }) => {
     setError('');
     const code = otp.join('');
     if (code.length < OTP_LENGTH) {
-      setError(`Please enter all ${OTP_LENGTH} digits.`);
+      setError(`Vui lòng nhập đủ ${OTP_LENGTH} chữ số.`);
       return;
     }
     verifyOtpMutation.mutate(
@@ -66,7 +66,7 @@ const ForgotOtpForm: React.FC<Props> = ({ email, onBack, onSuccess }) => {
       {
         onSuccess: () => onSuccess(otp),
         onError: (err) =>
-          setError(getApiErrorMessage(err, 'Invalid or expired code. Please try again.')),
+          setError(getApiErrorMessage(err, 'Mã không hợp lệ hoặc đã hết hạn. Vui lòng thử lại.')),
       }
     );
   };
@@ -78,16 +78,16 @@ const ForgotOtpForm: React.FC<Props> = ({ email, onBack, onSuccess }) => {
         onClick={onBack}
         className="flex items-center gap-1 text-slate-400 hover:text-white text-sm mb-6 transition-colors"
       >
-        <ArrowLeft size={16} /> Back
+        <ArrowLeft size={16} /> Quay lại
       </button>
 
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blue-500/10 mb-4">
           <ShieldCheck className="text-blue-400" size={26} />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Enter Code</h2>
+        <h2 className="text-2xl font-bold text-white mb-2">Nhập Mã</h2>
         <p className="text-slate-400 text-sm">
-          We sent a {OTP_LENGTH}-digit code to{' '}
+          Chúng tôi đã gửi mã {OTP_LENGTH} chữ số đến{' '}
           <span className="text-white font-medium">{email}</span>
         </p>
       </div>
@@ -116,18 +116,18 @@ const ForgotOtpForm: React.FC<Props> = ({ email, onBack, onSuccess }) => {
           disabled={verifyOtpMutation.isPending}
           className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]"
         >
-          {verifyOtpMutation.isPending ? 'Verifying...' : 'Verify Code'}
+          {verifyOtpMutation.isPending ? 'Đang xác nhận...' : 'Xác Nhận Mã'}
         </button>
 
         <p className="text-center text-slate-500 text-sm">
-          Didn't receive it?{' '}
+          Không nhận được mã?{' '}
           <button
             type="button"
             disabled={resendMutation.isPending}
             onClick={handleResend}
             className="text-blue-400 hover:underline font-medium disabled:opacity-50"
           >
-            {resendMutation.isPending ? 'Sending...' : 'Resend'}
+            {resendMutation.isPending ? 'Đang gửi...' : 'Gửi lại'}
           </button>
         </p>
       </form>

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import LoginModal from './LoginModal';
-import {useAuth} from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header: React.FC = () => {
   const { isAuthenticated, logout, isLoading } = useAuth();
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
                   onClick={logout}
                   className="px-4 py-2 border border-white/10 hover:bg-white/10 text-white rounded-full text-sm font-semibold transition-all active:scale-95"
                 >
-                  Logout
+                  Đăng Xuất
                 </button>
               </>
             ) : (
@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                 onClick={() => setIsModalOpen(true)}
                 className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-sm font-bold transition-all shadow-md shadow-blue-500/20 active:scale-95"
               >
-                Login
+                Đăng Nhập
               </button>
             )}
           </nav>

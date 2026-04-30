@@ -40,7 +40,7 @@ const RecentLinks: React.FC = () => {
     <div className="mt-12 w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex items-center gap-2 mb-4 text-slate-400">
         <History size={18} />
-        <h2 className="text-sm font-bold uppercase tracking-wider">Your Recent Links (Local)</h2>
+        <h2 className="text-sm font-bold uppercase tracking-wider">Link Gần Đây</h2>
       </div>
 
       <div className="space-y-3">
@@ -80,8 +80,8 @@ const RecentLinks: React.FC = () => {
       </div>
 
       <p className="mt-4 text-[10px] text-slate-600 text-center italic">
-        These links are stored locally in your browser.
-        Login to save them permanently and view analytics.
+        Các link này được lưu cục bộ trên trình duyệt của bạn.
+        Đăng nhập để lưu vĩnh viễn và xem thống kê.
       </p>
     </div>
   );

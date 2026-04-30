@@ -39,13 +39,14 @@ export interface LinkStats {
   recent_clicks: ClickDetail[];
 }
 
-export const useLinks = () => {
+export const useLinks = (isAuthenticated = false) => {
   return useQuery<LinksResponse>({
     queryKey: ['links'],
     queryFn: async () => {
       const response = await apiClient.get('/links');
       return response.data;
     },
+    enabled: isAuthenticated,
   });
 };
 

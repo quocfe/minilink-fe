@@ -32,9 +32,9 @@ const ForgotEmailForm: React.FC<Props> = ({ defaultEmail = '', onBack, onSuccess
     toast.promise(
       forgotPasswordMutation.mutateAsync({ email: data.email }),
       {
-        loading: 'Sending verification code...',
-        success: 'Code sent to your email!',
-        error: (err) => getApiErrorMessage(err, 'Failed to send code'),
+        loading: 'Đang gửi mã xác nhận...',
+        success: 'Mã đã được gửi vào email của bạn!',
+        error: (err) => getApiErrorMessage(err, 'Không thể gửi mã'),
       }
     );
   };
@@ -48,16 +48,16 @@ const ForgotEmailForm: React.FC<Props> = ({ defaultEmail = '', onBack, onSuccess
         onClick={onBack}
         className="flex items-center gap-1 text-slate-400 hover:text-white text-sm mb-6 transition-colors"
       >
-        <ArrowLeft size={16} /> Back to Sign In
+        <ArrowLeft size={16} /> Quay lại Đăng Nhập
       </button>
 
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blue-500/10 mb-4">
           <Mail className="text-blue-400" size={26} />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Forgot Password</h2>
+        <h2 className="text-2xl font-bold text-white mb-2">Quên Mật Khẩu</h2>
         <p className="text-slate-400 text-sm">
-          Enter your email and we'll send you a verification code.
+          Nhập email của bạn và chúng tôi sẽ gửi mã xác nhận.
         </p>
       </div>
 
@@ -68,8 +68,8 @@ const ForgotEmailForm: React.FC<Props> = ({ defaultEmail = '', onBack, onSuccess
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
             <input
               {...register('email', {
-                required: 'Email is required',
-                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email address' },
+                required: 'Email không được để trống',
+                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Địa chỉ email không hợp lệ' },
               })}
               type="email"
               placeholder="name@example.com"
@@ -87,7 +87,7 @@ const ForgotEmailForm: React.FC<Props> = ({ defaultEmail = '', onBack, onSuccess
           disabled={isPending}
           className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98] mt-2"
         >
-          {isPending ? 'Sending...' : 'Send Verification Code'}
+          {isPending ? 'Đang gửi...' : 'Gửi Mã Xác Nhận'}
         </button>
       </form>
     </div>

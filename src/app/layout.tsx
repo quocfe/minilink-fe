@@ -2,6 +2,7 @@ import {Inter} from "next/font/google";
 import {cookies} from "next/headers";
 import "./globals.css";
 import {Providers} from "./providers";
+export {metadata} from "./metadata";
 
 const inter = Inter({ subsets: ["latin"], display: "swap", preload: false });
 

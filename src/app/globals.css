@@ -9,8 +9,8 @@
 }
 
 :root {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: #f8fafc;
+  color: #0f172a;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -34,5 +34,5 @@ body {
 }
 
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600;
 }

@@ -69,7 +69,7 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
       { credential: credentialResponse.credential },
       {
         onSuccess: handleAuthSuccess,
-        onError: (err) => alert(getApiErrorMessage(err, 'Google login failed')),
+        onError: (err) => alert(getApiErrorMessage(err, 'Đăng nhập Google thất bại')),
       }
     );
   };
@@ -79,13 +79,13 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
       loginMutation.mutate(data, {
         onSuccess: handleAuthSuccess,
         onError: (err) =>
-          setError('root', { message: getApiErrorMessage(err, 'Login failed') }),
+          setError('root', { message: getApiErrorMessage(err, 'Đăng nhập thất bại') }),
       });
     } else {
       registerMutation.mutate(data, {
         onSuccess: handleAuthSuccess,
         onError: (err) =>
-          setError('root', { message: getApiErrorMessage(err, 'Registration failed') }),
+          setError('root', { message: getApiErrorMessage(err, 'Đăng ký thất bại') }),
       });
     }
   };
@@ -97,10 +97,10 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
     <div className="p-8">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-white mb-2">
-          {isLogin ? 'Welcome Back' : 'Create Account'}
+          {isLogin ? 'Chào mừng trở lại' : 'Tạo tài khoản'}
         </h2>
         <p className="text-slate-400">
-          {isLogin ? 'Enter your details to sign in' : 'Join MiniLink to track your links'}
+          {isLogin ? 'Nhập thông tin để đăng nhập' : 'Tham gia MiniLink để theo dõi link của bạn'}
         </p>
       </div>
 
@@ -112,8 +112,8 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
             <input
               {...register('email', {
-                required: 'Email is required',
-                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email address' },
+                required: 'Email không được để trống',
+                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Địa chỉ email không hợp lệ' },
               })}
               type="email"
               placeholder="name@example.com"
@@ -133,7 +133,7 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
                 onClick={() => onForgotPassword(currentEmail)}
                 className="text-xs text-blue-400 hover:underline"
               >
-                Forgot password?
+                Quên mật khẩu?
               </button>
             )}
           </div>
@@ -141,8 +141,8 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
             <input
               {...register('password', {
-                required: 'Password is required',
-                minLength: { value: 6, message: 'At least 6 characters' },
+                required: 'Mật khẩu không được để trống',
+                minLength: { value: 6, message: 'Tối thiểu 6 ký tự' },
               })}
               type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
@@ -168,7 +168,7 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
           disabled={isPending}
           className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98] mt-2"
         >
-          {isPending ? 'Processing...' : isLogin ? 'Sign In' : 'Sign Up'}
+          {isPending ? 'Đang xử lý...' : isLogin ? 'Đăng Nhập' : 'Đăng Ký'}
         </button>
       </form>
 
@@ -176,13 +176,13 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-white/10" />
         </div>
-        <span className="relative px-4 bg-[#0f172a] text-slate-500 text-sm">OR</span>
+        <span className="relative px-4 bg-[#0f172a] text-slate-500 text-sm">HOẶC</span>
       </div>
 
       <div className="flex flex-col items-center justify-center gap-4">
         <GoogleLogin
           onSuccess={handleGoogleSuccess}
-          onError={() => alert('Google login failed')}
+          onError={() => alert('Đăng nhập Google thất bại')}
           theme="outline"
           shape="rectangular"
           width="100%"
@@ -190,13 +190,13 @@ const AuthForm: React.FC<Props> = ({ onClose, onForgotPassword }) => {
       </div>
 
       <p className="mt-8 text-center text-slate-400 text-sm">
-        {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
+        {isLogin ? 'Chưa có tài khoản?' : 'Đã có tài khoản?'}{' '}
         <button
           type="button"
           onClick={() => setIsLogin(!isLogin)}
           className="text-blue-400 font-bold hover:underline"
         >
-          {isLogin ? 'Sign Up' : 'Sign In'}
+          {isLogin ? 'Đăng Ký' : 'Đăng Nhập'}
         </button>
       </p>
     </div>
